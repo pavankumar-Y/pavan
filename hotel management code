@@ -1,0 +1,307 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<iostream>
+#include<fstream>
+using namespace std;
+int totalhotels=2,totalusers=4;
+class Admin
+{
+public:    
+    char ID[10];
+    char password[10];
+}topadmin;
+class User
+{
+public:
+    char ID[10];
+    char password[10];
+    int bookedhotelid;
+    char hotelbooked[10];
+    char roombooked[10];
+    int  daysstaying;
+    int mybill;
+    
+}userarray[4];
+class Hotel
+{
+public:
+   char hotelname[10];
+   char location[10];
+   
+   
+   int no_of_delux;
+   int no_of_normal;
+   int no_of_ac;
+  
+   int deluxcost;
+   int normalcost;
+   int accost;
+   
+   Hotel()
+     {
+         no_of_delux=10;
+         no_of_normal=10;
+         no_of_ac=10;
+         
+         deluxcost=2000;
+         accost=1000;
+         normalcost=500;
+         
+     }
+     void bookroom(int i);
+     void cancelroom();
+     void checkout();
+    
+}hotelarray[10];
+   
+   topadmin.ID="topadmin";
+   topadmin.password="topadmin";
+   
+   userarray[0].ID="pavan";
+   userarray[0].password="pavan";
+   userarray[1].ID="praveen";
+   userarray[1].password="praveen";
+   userarray[2].ID="naveen";
+   userarray[2].password="naveen";
+   userarray[3].ID="kumar";
+   userarray[3].password="kumar";
+    
+   
+   hotelarray[0].hotelname="royal";
+   hotelarray[0].location="chennai";
+   hotelarray[1].hotelname="manila";
+   hotelarray[1].location="bangalore";
+   
+   int currentid;
+   int currenthotelid;
+void hotel::bookroom(int i)
+{
+    char roomtype[10];
+    int staydays;
+    strcpy(userarray[currentid].hotelbooked,hotelarray[i].hotelname);
+    userarray[currentid].bookedhotelid=i;
+    
+    cout<<"which type of room do you prefer??\n delux\n normal\n ac\n nonac";
+    cin>>roomtype;
+    cout<<"expected staying time??";
+    cin>>staydays;
+    
+            if(roomtype=="delux")
+            {
+              no_of_delux--;
+              userarray[currentid].daysstaying=staydays;
+              
+              strcpy(userarray[currentid].roombooked,roomtype);
+              userarray[currentid].daysstaying=staydays;
+              
+              cout<<"Delux room booked";
+            }
+            if(roomtype=="normal")
+            {
+              no_of_normal--;
+              userarray[currentid].daysstaying=staydays;
+              
+              strcpy(userarray[currentid].roombooked,roomtype);
+              userarray[currentid].daysstaying=staydays;
+              cout<<"normal room booked";
+            }
+            if(roomtype=="ac")
+            {
+              no_of_ac--;
+              userarray[currentid].daysstaying=staydays;
+              
+              strcpy(userarray[currentid].roombooked,roomtype);
+              userarray[currentid].daysstaying=staydays;
+              cout<<"ac room booked";
+            }
+            
+        
+    }
+    
+    
+
+void hotel::cancelroom()
+{
+    char yesorno[5];
+    cout<<"you have booked a %s room in %s hotel for %d days\nSHALL I CANCEL IT,SURE?",userarray[currentid].roombooked,userarray[currentid].hotelbooked,userarray[currentid].daysstaying;
+    cin>>yesorno;
+    if(yesorno=="yes")
+    {
+        
+              strcpy(userarray[currentid].hotelbooked,"NONE");
+              strcpy(userarray[currentid].roombooked,"NONE");
+              userarray[currentid].daysstaying=0;
+              
+                      if(userarray[currentid].roombooked=="delux")
+                       no_of_delux++;
+                      if(userarray[currentid].roombooked=="normal")
+                       no_of_normal++;
+                      if(userarray[currentid].roombooked=="ac")
+                       no_of_ac++;
+                   
+             
+              cout<<"room cancelled";
+              
+    }
+}
+void hotel::checkout()
+{
+    int billamount,download;
+    
+    
+        if(userarray[currentid].roombooked=="delux")
+        {billamount=userarray[currentid].daysstaying*2000;
+        no_of_delux++;}
+        if(userarray[currentid].roombooked=="normal")
+        {billamount=userarray[currentid].daysstaying*500;
+        no_of_normal++;}
+        if(userarray[currentid].roombooked=="ac")
+        {billamount=userarray[currentid].daysstaying*1000;
+        no_of_ac++;}
+                   
+              
+    userarray[currentid].mybill=billamount;
+    cout<<"your bill amount for %s room in %s hotel for %d days is %d",userarray[currentid].roombooked,userarray[currentid].hotelbooked,userarray[currentid].daysstaying,billamount;
+    cout<<"1.Download your bill or press anykey to leave";
+    cin>>download;
+    switch(download)
+    case 1:
+       download();
+       break;
+    default :cout"We hope your stay was good, keep visiting, You are always welcomed";
+    
+    
+}
+void download()
+{
+    ofstream yourbill(bill.txt);
+    yourbill<<"\n\t\t\t\t\t\t\t%s\nroomtype : %s\nnumber of days stayed : %d\ntotal bill amount to be paid $%d\n\t\t\t\t\t\t\t\t\tyou are most welcomed, keep visiting",userarray[currentid].hotelbooked,userarray[currentid].roombooked,userarray[currentid].daysstaying,userarray[currentid].mybill;
+    while(yourbill.eof()==0)
+	{
+        yourbill>>s;
+        cout<<s<<" ";
+    
+}
+void filter()
+{
+    int choice,count=0;
+    char searchkey[10];
+    cout<<"search by \n\t\t1.name\n\t\t2.location";
+    cin>>choice;
+    switch(choice)
+    {
+        case 1:
+        {
+            cout<<"enter hotel name";
+            cin>>searchkey;
+            for(int i=0;i<totelhotels;i++)
+            {
+                if(hotelarray[i].hotelname==searchkey)
+                {
+                 count++;   
+                }
+            }
+            cout<<"%d hotels found",count;
+        }
+        case 2:
+        {
+            cout<<"enter hotel location";
+            cin>>searchkey;
+            for(int i=0;i<totelhotels;i++)
+            {
+                if(hotelarray[i].location==searchkey)
+                {
+                 count++;   
+                }
+            }
+            cout<<"%d hotels found",count;
+        }
+    }
+}
+   
+void addhotel()
+{
+    cout<<"enter hotel name to be included";
+    cin>>hotelarray[totalhotels++].hotelname;
+    cout<<"enter the location";
+    cin>>hotelarray[totalhotels].location;
+    cout<<"hotel added successfully";
+}
+int main()
+{
+    char userid[10],passkey[10];
+    int type_of_user,choice;
+    cout<<"Welcome\n1.user login or 2.admin login";
+    cin>>type_of_user;
+    switch(type_of_user)
+    case 1:
+    {
+    cout<<"Enter your userid:";
+    cin>>userid;
+    cout<<"\nEnter your passkey";
+    cin>>passkey;
+    for(int i=0;i<totalusers;i++)
+    {
+        if(userarray[i].ID==userid&&userarray[i].password==passkey)
+        {
+            currentid=i;
+            cout<<"logged in successfully";
+            cout<<"1.Search and Book new rooms\n2.Cancel booked rooms\n3.Checkout rooms\n4.to Filter and search";
+            cin>>choice;
+            switch(choice)
+            {
+               case 1:
+                   {
+                       char req_hotel[10];
+                       cout<<"enter hotel name";
+                       cin>>req_hotel;
+                       for(int i=0;i<totalhotels;i++)
+                       {
+                           if(hotelarray[i].hotelname==req_hotel)
+                           cout<<"hotel found";
+                           currenthotelid=i;
+                           hotelarray[i].bookroom(i);
+                       }
+                       break;
+                   }
+                case 2:hotelarray[userarray[currentid].bookedhotelid].cancelroom();break;
+                case 3:hotelarray[userarray[currentid].bookedhotelid].checkout();break;
+                case 4:filter();break;
+                default:cout<<"invalid choice";
+            }
+            
+        }
+    }break;
+
+     case 2:
+     {
+         char adminid,adminpassword,actionchoice;
+         cout<<"enter admin id:";
+         cin>>adminid;
+         cout<<"enter your password";
+         cin>>adminpassword;
+         if(adminid==topadmin.ID&&adminpassword==topadmin.password)
+         {
+             cout<<"logged in as admin successfully";
+             cout<<"1.add hotel or 2.add rooms"
+             cin>>actionchoice;
+             switch(actionchoice)
+             case 1:
+             {
+                addhotel();
+                break;
+             }
+         }
+     }
+    }
+    return 0;
+}
